@@ -90,6 +90,7 @@ void library_details()
                 printf("Exit");
                 break;
         }
+        free(details[indexer].title);
         indexer++;
     }while(choice==1 || choice==2);
 
@@ -114,14 +115,15 @@ void push_from_queue_to_stack()
         {
             push_book(book_s, items_queue); // from queue to  stack
             printf("item %i is moved from queue to book stack\n", front+1);
-            dequeue();
         }
         else if(library[front].type == is_article)
         {
             push_article(article_s, items_queue);
             printf("item %i is moved from queue to articles stack\n", front+1);
-            dequeue();
+
         }
+        dequeue();
+        free(items_queue[rear].q_title);
     }
 }
 

@@ -12,7 +12,7 @@
 stack_books book_s[SIZE];
 stack_articles article_s[SIZE];
 
-static int top_b = -1, top_a = -1;
+int top_b = -1, top_a = -1;
 
 void push_book(stack_books *b, queue *q)
 {
@@ -48,14 +48,15 @@ void push_article(stack_articles *a, queue *q)
     {
         top_a++;
         a[top_a].a_title = malloc(SIZE);
-        
+
         if(a[top_a].a_title == NULL)
         {
             printf("Nothing to Show\n");
         }
-        
+
         strcpy(a[top_a].a_title, q[front].q_title);
         a[top_a].a_pages = q[front].q_pages;
+
     }
 }
 

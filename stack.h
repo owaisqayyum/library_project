@@ -1,6 +1,5 @@
 #ifndef __STACK_H_
 #define __STACK_H_
-
 #include "queue.h"
 
 typedef struct stack_books
@@ -26,5 +25,9 @@ void pop_article_stack();
 // structs declarations
 stack_books book_s[SIZE];
 stack_articles article_s[SIZE];
+
+// declaring variables
+extern int top_b, top_a;
+
 
 #endif // __STACK_H_
