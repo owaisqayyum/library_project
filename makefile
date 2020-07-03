@@ -1,6 +1,6 @@
 # Make file for running the project
 CC=gcc
-CFLAGS= -Wall -g
+CFLAGS= -g -Wall
 LDFLAGS = -include
 OBJFILES = main.o queue.o stack.o
 HEADERS = main.h queue.h stack.h

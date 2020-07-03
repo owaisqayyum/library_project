@@ -9,12 +9,12 @@
 #include "queue.h"
 
 // struct declarations
-static stack_books book_s[100];
-static stack_articles article_s[100];
+stack_books book_s[SIZE];
+stack_articles article_s[SIZE];
 
 static int top_b = -1, top_a = -1;
 
-void push()
+void push_book(stack_books *b, queue *q)
 {
     if(top_b >= 99)
     {
@@ -22,45 +22,57 @@ void push()
         exit(-1);
     }
 
-    else if(top_a >= 99)
+    else
+    {
+        top_b++;
+        b[top_b].b_title = malloc(SIZE);
+        
+        if(b[top_b].b_title == NULL)
+        {
+            printf("Nothing to Show\n");
+        }
+        
+        strcpy(b[top_b].b_title, q[front].q_title);
+        b[top_b].b_pages = q[front].q_pages;
+    }
+}
+
+void push_article(stack_articles *a, queue *q)
+{
+    if(top_a >= 99)
     {
         printf("Article Stack Overflow\n");
         exit(-1);
     }
     else
     {
-        if(library[front].type == is_book)
+        top_a++;
+        a[top_a].a_title = malloc(SIZE);
+        
+        if(a[top_a].a_title == NULL)
         {
-            top_b++;
-            strcpy(book_s[top_b].b_title, items_queue[front].q_title);
-            book_s[top_b].b_pages = items_queue[front].q_pages;
-            printf("item %i is moved from queue to book stack\n", front+1);
-            dequeue();
+            printf("Nothing to Show\n");
         }
-        else if(library[front].type == is_article)
-        {
-            top_a++;
-            strcpy(article_s[top_a].a_title, items_queue[front].q_title);
-            article_s[top_a].a_pages = items_queue[front].q_pages;
-            printf("item %i is moved from queue to articles stack\n", front+1);
-            dequeue();
-        }
+        
+        strcpy(a[top_a].a_title, q[front].q_title);
+        a[top_a].a_pages = q[front].q_pages;
     }
 }
 
-void display_book_stack()
+
+void display_book_stack(stack_books *b)
 {
     for (int i = top_b; i >=0 ; i--)
     {
-        printf("top -> %i: Book %s with %i pages\n", i, book_s[i].b_title, book_s[i].b_pages);
+        printf("top -> %i: Book %s with %i pages\n", i, b[i].b_title, b[i].b_pages);
     }
 }
 
-void display_article_stack()
+void display_article_stack(stack_articles *a)
 {
     for (int i = top_a; i >=0 ; i--)
     {
-        printf("top -> %i: Article %s with %i pages\n", i, article_s[i].a_title, article_s[i].a_pages);
+        printf("top -> %i: Article %s with %i pages\n", i, a[i].a_title, a[i].a_pages);
     }
 }
 
@@ -79,7 +91,7 @@ void pop_book_stack()
 
 void pop_article_stack()
 {
-     if(top_b < 0)
+    if(top_b < 0)
     {
         printf("Stack Underflow\n");
     }

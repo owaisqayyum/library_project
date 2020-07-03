@@ -8,9 +8,9 @@
 #include "main.h"
 
 int rear = 0, front = 0;
-queue items_queue[100];
+queue items_queue[SIZE];
 
-void inqueue()
+void inqueue(details_struct *d, queue *q)
 {
     if(front > rear)
     {
@@ -19,8 +19,13 @@ void inqueue()
     }
     else
     {
-        strcpy(items_queue[rear].q_title, details[rear].title);
-        items_queue[rear].q_pages = details[rear].pages;
+        q[rear].q_title = malloc(SIZE);
+        if(q[rear].q_title == NULL)
+        {
+            printf("Nothing to show\n");
+        }
+        strcpy(q[rear].q_title, d[rear].title);
+        q[rear].q_pages = d[rear].pages;
         printf("Item %i added to queue\n", rear+1) ;
         rear++;
     }

@@ -1,6 +1,8 @@
 #ifndef __MAIN_H_
 #define __MAIN_H_
 
+#define SIZE 100
+
 enum book_type {is_book, is_article};
 typedef struct library_struct
 {
@@ -10,12 +12,12 @@ typedef struct library_struct
 
 typedef struct details_struct
 {
-    char title[50];
+    char *title;
     int pages;
 }details_struct;
 
 // external variables
-extern details_struct details[100];
-extern library_struct library[100];
+extern details_struct details[SIZE];
+extern library_struct library[SIZE];
 
 #endif // __MAIN_H_

@@ -13,14 +13,15 @@ void stack_display(void);
 void push_from_queue_to_stack(void);
 
 //struct definitions
-details_struct details[100];
-library_struct library[100];
+details_struct details[SIZE];
+library_struct library[SIZE];
 
 FILE *fp;
 static int indexer = 0;
 
 int main(void)
 {
+
     fp = fopen("input.txt","r");
 
     library_details(); //inserting values of books and articles and adding them to queue
@@ -39,6 +40,12 @@ void library_details()
     static int choice;
     do
     {
+        details[indexer].title = malloc(SIZE);
+        if(details[indexer].title == NULL)
+        {
+            printf("Nothing to show\n");
+        }
+        
         printf("[1] : Book Title and Pages \n");
         printf("[2] : Article Title and Pages \n");
         printf("[3] : Exit\n");
@@ -70,14 +77,14 @@ void library_details()
                 fscanf(fp, "%[^\n]", details[indexer].title);
                 fscanf(fp, "%i\n", &details[indexer].pages);
                 library[indexer].type = is_book;
-                inqueue();
+                inqueue(details, items_queue); // from details to queue
                 break;
             case 2:
                 printf("Article 'Title' and 'Pages'\n");
                 fscanf(fp, "%[^\n]", details[indexer].title);
                 fscanf(fp, "%i\n", &details[indexer].pages);
                 library[indexer].type = is_article;
-                inqueue();
+                inqueue(details, items_queue); // from details to queue
                 break;
             default:
                 printf("Exit");
@@ -99,11 +106,22 @@ void library_details()
     }
 }
 
-void push_from_queue_to_stack(void)
+void push_from_queue_to_stack()
 {
     for (int i = front; i < rear; i++)
     {
-        push();
+        if(library[front].type == is_book)
+        {
+            push_book(book_s, items_queue); // from queue to  stack
+            printf("item %i is moved from queue to book stack\n", front+1);
+            dequeue();
+        }
+        else if(library[front].type == is_article)
+        {
+            push_article(article_s, items_queue);
+            printf("item %i is moved from queue to articles stack\n", front+1);
+            dequeue();
+        }
     }
 }
 
@@ -123,11 +141,11 @@ void stack_display()
         {
             case 1:
                 printf("Books Stack\n");
-                display_book_stack();
+                display_book_stack(book_s);
                 break;
             case 2:
                 printf("Articles Stack\n");
-                display_article_stack();
+                display_article_stack(article_s);
                 break;
             case 3:
                 printf("Exit\n");

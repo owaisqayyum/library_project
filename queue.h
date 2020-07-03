@@ -1,9 +1,11 @@
 #ifndef __QUEUE_H_
 #define __QUEUE_H_
+#include "main.h"
+//#define SIZE 100
 
 typedef struct queue
 {
-    char q_title[50];
+    char *q_title;
     int q_pages;
 }queue;
 
@@ -11,12 +13,12 @@ typedef struct queue
 extern int rear, front;
 
 // function declarations
-void inqueue();
+void inqueue(details_struct *d, queue *q);
 void dequeue();
 void display_queue();
 
 // struct declaration
-extern queue items_queue[100];
+extern struct queue items_queue[SIZE];
 
 
 #endif // __QUEUE_H_
